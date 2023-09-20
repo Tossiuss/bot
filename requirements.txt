@@ -1,0 +1,6 @@
+requests
+pytelegrambotapi
+python-decouple
+black
+aiogram
+data
