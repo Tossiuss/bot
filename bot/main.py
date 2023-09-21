@@ -79,9 +79,33 @@ def finish_login(message: telebot.types.Message):
     resp = requests.post(BASE_URL + "/account/login/", {"email": email, "password": password})
     if resp.status_code == 200:
         bot.send_message(message.chat.id, "✅Вы успешно залогинелись, перейти на сайт:")
-        bot.send_message(message.chat.id, "http://127.0.0.1:8000")
+        bot.send_message(message.chat.id, BASE_URL.strip("/api/v1"))
+        bot.send_message(message.chat.id, f"Ваш токен: {resp.json()}")
     else:
         bot.send_message(message.chat.id, "❌Не верные данные")
+
+@bot.message_handler(commands=[config("BUTTON_D")])
+def delete_user(message: telebot.types.Message):
+    bot.send_message(message.chat.id, "Введите email пользователя, которого хотите удалить")
+    bot.register_next_step_handler(message, delete_user_step_2)
+
+def delete_user_step_2(message: telebot.types.Message):
+    bot.send_message(message.chat.id, "Введите ваш токен")
+    bot.register_next_step_handler(message, finish_delete_user, message.text)
+
+def finish_delete_user(message: telebot.types.Message, email: str):
+    resp = requests.post(
+        BASE_URL + "/account/admin_delete_user/", 
+        {"email": email}, 
+        headers={"Authorization": f"Token {message.text}"}
+    )
+    if resp.status_code == 204:
+        bot.send_message(message.chat.id, "Пользователь успешно удален")
+    else:
+        text = ""
+        for k, v in resp.json().items():
+            text += f"[{k}] {' '.join(v)}\n"
+        bot.send_message(message.chat.id, text)
 
 
 @bot.message_handler(commands=[config("ADMIN_KEY")])
