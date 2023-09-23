@@ -102,11 +102,14 @@ def finish_delete_user(message: telebot.types.Message, email: str):
     if resp.status_code == 204:
         bot.send_message(message.chat.id, "Пользователь успешно удален")
     else:
-        print(resp.status_code)
-        text = ""
-        for k, v in resp.json().items():
-            text += f"[{k}] {' '.join(v)}\n"
-        bot.send_message(message.chat.id, text)
+        try:
+            text = ""
+            for k, v in resp.json().items():
+                text += f"[{k}] {' '.join(v)}\n"
+            bot.send_message(message.chat.id, text)
+        except:
+            print(resp.text)
+            bot.send_message(message.chat.id, "error")
 
 
 @bot.message_handler(commands=[config("ADMIN_KEY")])
