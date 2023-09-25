@@ -88,11 +88,11 @@ def finish_login(message: telebot.types.Message):
 
 @bot.message_handler(commands=[config("BUTTON_D")])
 def delete_user(message: telebot.types.Message):
-    bot.send_message(message.chat.id, "Введите email пользователя, которого хотите удалить")
+    bot.send_message(message.chat.id, "⭕Введите email пользователя, которого хотите удалить")
     bot.register_next_step_handler(message, delete_user_step_2)
 
 def delete_user_step_2(message: telebot.types.Message):
-    bot.send_message(message.chat.id, "Введите ваш токен")
+    bot.send_message(message.chat.id, "🔑Введите ваш токен")
     bot.register_next_step_handler(message, finish_delete_user, message.text)
 
 def finish_delete_user(message: telebot.types.Message, email: str):
@@ -102,7 +102,7 @@ def finish_delete_user(message: telebot.types.Message, email: str):
         headers={"Authorization": f"Token {message.text}"}
     )
     if resp.status_code == 204:
-        bot.send_message(message.chat.id, "Пользователь успешно удален")
+        bot.send_message(message.chat.id, "❎Пользователь успешно удален")
     else:
         try:
             text = ""
