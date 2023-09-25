@@ -3,15 +3,10 @@ import requests
 import telebot
 import time
 from decouple import config
-from configparser import ConfigParser 
 
 
 bot = telebot.TeleBot(config("TOKEN"))
 BASE_URL = config("BASE_URL")
-
-
-config = ConfigParser()
-config.read('.env')
 
 
 @bot.message_handler(commands=['start'])
@@ -149,7 +144,7 @@ def start(message):
 @bot.message_handler(commands=[config("DELTA_S")])
 def start(message):
     delta_k = config.get("DELTA_K")
-    bot.send_message(message.chat.id, delta_k)
+    bot.send_message(message.chat.id, '2e43052dd9b80d5d0764a2974e1f00fbb1abf')
 
 
 bot.polling()
