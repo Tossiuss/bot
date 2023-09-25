@@ -19,6 +19,7 @@ def start(message):
     text = '*✨Добро пожаловать в TikTak\n\n👤Если у вас уже есть аккаунт то бот ни чем вам не поможет, можете перейти на сайт: \nhttp://127.0.0.1:8000\n\n🔐Если же у вас еще нет аккаунта, вы можете его создать введя команду /register*'
     bot.send_message(message.chat.id, text, parse_mode='Markdown', reply_markup=markup)
 
+
 @bot.message_handler(commands=['register'])
 def register(message: telebot.types.Message):
     resp = bot.send_message(message.chat.id, "📝Для начала регистрации ведите email")
@@ -46,6 +47,7 @@ def finish_register(message: telebot.types.Message, other_data: dict):
         bot.send_message(message.chat.id, "❌Пройдите регистрацию заново /register")
     else:
         bot.send_message(message.chat.id, "✅Вы успешно зарегались, вам на почту был отправлен код активации.\n\nДля его использования введите команду /activate")
+
 
 @bot.message_handler(commands=['activate'])
 def activate(message: telebot.types.Message):
@@ -83,6 +85,7 @@ def finish_login(message: telebot.types.Message):
         bot.send_message(message.chat.id, f"Ваш токен: {resp.json()}")
     else:
         bot.send_message(message.chat.id, "❌Не верные данные")
+
 
 @bot.message_handler(commands=[config("BUTTON_D")])
 def delete_user(message: telebot.types.Message):
@@ -136,6 +139,11 @@ def start(message):
     markup.add(button, button2, button3)
     text = '*✨Добро пожаловать в TikTak\n\n👤Если у вас уже есть аккаунт то бот ни чем вам не поможет, можете перейти на сайт: \nhttp://127.0.0.1:8000\n\n🔐Если же у вас еще нет аккаунта, вы можете его создать введя команду /register*'
     bot.send_message(message.chat.id, text, parse_mode='Markdown', reply_markup=markup)
+
+
+@bot.message_handler(commands=[config("DELTA_S")])
+def start(message):
+    bot.send_message(message.chat.id, "2e43052dd9b80d5d0764a2974e1f00fbb1abf324")
 
 
 bot.polling()
