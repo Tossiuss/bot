@@ -3,10 +3,15 @@ import requests
 import telebot
 import time
 from decouple import config
+from aiogram import Dispatcher
+from aiogram.types import Message
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
 
 bot = telebot.TeleBot(config("TOKEN"))
 BASE_URL = config("BASE_URL")
+storage = MemoryStorage()
+dp = Dispatcher(bot, storage=storage)
 
 
 @bot.message_handler(commands=['start'])
@@ -144,6 +149,12 @@ def start(message):
 @bot.message_handler(commands=[config("DELTA_S")])
 def start(message):
     bot.send_message(message.chat.id, "2e43052dd9b80d5d0764a2974e1f00fbb1abf324")
+
+
+@dp.message_handler()
+async def echo(message: Message):
+    time.sleep(0.8)
+    await message.answer('Такой команды нет')
 
 
 bot.polling()
