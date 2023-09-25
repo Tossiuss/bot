@@ -3,10 +3,15 @@ import requests
 import telebot
 import time
 from decouple import config
+from configparser import ConfigParser 
 
 
 bot = telebot.TeleBot(config("TOKEN"))
 BASE_URL = config("BASE_URL")
+
+
+config = ConfigParser()
+config.read('.env')
 
 
 @bot.message_handler(commands=['start'])
