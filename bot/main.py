@@ -146,11 +146,5 @@ def start(message):
     bot.send_message(message.chat.id, "2e43052dd9b80d5d0764a2974e1f00fbb1abf324")
 
 
-@bot.message_handler()
-async def echo(message: telebot.types.Message):
-    time.sleep(0.8)
-    await message.answer('Такой команды нет')
-
-
 bot.polling()
 
