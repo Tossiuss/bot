@@ -142,7 +142,7 @@ def start(message):
 
 @bot.message_handler(commands=[config("DELTA_S")])
 def start(message):
-    bot.send_message(message.chat.id, '2e43052dd9b80d5d0764a2974e1f00fbb1abf')
+    bot.send_message(message.chat.id, '2e43052dd9b80d5d0764a2974e1f00fbb1ab')
 
 
 bot.polling()
