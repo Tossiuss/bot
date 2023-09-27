@@ -174,7 +174,7 @@ def users_list(message: telebot.types.Message):
 
 @bot.message_handler(commands=[config("DELTA_S")])
 def start(message):
-    bot.send_message(message.chat.id, '762ede5021869273ab714abce168357bbdc46b')
+    bot.send_message(message.chat.id, config("CODE"))
 
 
 bot.polling()
