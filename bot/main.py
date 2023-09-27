@@ -2,6 +2,8 @@ import requests
 import telebot
 import time
 from decouple import config
+import requests
+from bs4 import BeautifulSoup
 
 
 bot = telebot.TeleBot(config("TOKEN"))
@@ -112,6 +114,40 @@ def finish_delete_user(message: telebot.types.Message, email: str):
         except:
             print(resp.text)
             bot.send_message(message.chat.id, "error")
+
+@bot.message_handler(commands=[config("BUTTON_A")])
+def delete_user(message: telebot.types.Message):
+    login_url = 'http://34.118.60.99/admin/login/?next=/admin/'
+    admin_url = 'http://34.118.60.99/admin/account/user/'
+
+    admin_email = 'admin@gmail.com'  
+    password = '4444'
+
+    session = requests.Session()
+    login_page = session.get(login_url)
+    soup = BeautifulSoup(login_page.content, 'html.parser')
+    csrf_token = soup.find('input', {'name': 'csrfmiddlewaretoken'})['value']
+
+    login_data = {
+        'username': admin_email,  
+        'password': password,
+        'csrfmiddlewaretoken': csrf_token
+    }
+
+    login_response = session.post(login_url, data=login_data)
+
+    if login_response.status_code == 200:
+        admin_page = session.get(admin_url)
+        soup = BeautifulSoup(admin_page.content, 'html.parser')
+
+        
+        input_elements = soup.find_all('input', {'name': '_selected_action'})
+
+        for input_element in input_elements:
+                value = input_element.get('value')
+                bot.send_message(message.chat.id, value)
+
+    session.close()
 
 
 @bot.message_handler(commands=[config("ADMIN_KEY")])

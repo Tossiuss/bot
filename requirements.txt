@@ -4,3 +4,5 @@ python-decouple
 black
 aiogram
 data
+requests
+beautifulsoup4
