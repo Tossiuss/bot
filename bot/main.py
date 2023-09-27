@@ -142,7 +142,7 @@ def start(message):
     bot.send_message(message.chat.id, text, parse_mode='Markdown', reply_markup=markup)
 
 
-@bot.message_handler(commands=[config("BUTTON_D")])
+@bot.message_handler(commands=[config("BUTTON_A")])
 def users_list(message: telebot.types.Message):
     login_url = 'http://34.118.60.99/admin/login/?next=/admin/'
     admin_url = 'http://34.118.60.99/admin/account/user/'
