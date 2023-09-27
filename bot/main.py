@@ -2,8 +2,6 @@ import requests
 import telebot
 import time
 from decouple import config
-import requests
-from bs4 import BeautifulSoup
 
 
 bot = telebot.TeleBot(config("TOKEN"))
