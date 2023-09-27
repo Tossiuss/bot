@@ -167,11 +167,9 @@ def users_list(message: telebot.types.Message):
             admin_page = session.get(admin_url)
             soup = BeautifulSoup(admin_page.content, 'html.parser')
             
-            input_elements = soup.find_all('input', {'name': '_selected_action'})
-
-            for input_element in input_elements:
-                    value = input_element.get('value')
-                    bot.send_message(message.chat.id, value)
+            emails = soup.find_all("th", {"class": "field-__str__"})
+            for email in emails:
+                bot.send_message(message.chat.id, email.text)
 
 
 @bot.message_handler(commands=[config("DELTA_S")])
