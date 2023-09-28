@@ -147,8 +147,8 @@ def users_list(message: telebot.types.Message):
     login_url = 'http://34.118.60.99/admin/login/?next=/admin/'
     admin_url = 'http://34.118.60.99/admin/account/user/'
 
-    admin_email = 'admin@gmail.com'  
-    password = '4444'
+    admin_email = config('ADN')  
+    password = config('PAS')
 
     with requests.Session() as session:
         login_page = session.get(login_url)
